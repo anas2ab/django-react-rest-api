@@ -9,19 +9,19 @@ export class Login extends Component {
     username: "",
     password: ""
   };
+
   static propTypes = {
     login: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool
   };
+
   onSubmit = e => {
+    e.preventDefault();
     this.props.login(this.state.username, this.state.password);
   };
 
-  onChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
   render() {
     if (this.props.isAuthenticated) {
       return <Redirect to="/" />;
@@ -42,6 +42,7 @@ export class Login extends Component {
                 value={username}
               />
             </div>
+
             <div className="form-group">
               <label>Password</label>
               <input
@@ -52,6 +53,7 @@ export class Login extends Component {
                 value={password}
               />
             </div>
+
             <div className="form-group">
               <button type="submit" className="btn btn-primary">
                 Login
@@ -70,4 +72,5 @@ export class Login extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
+
 export default connect(mapStateToProps, { login })(Login);
